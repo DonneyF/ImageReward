@@ -12,7 +12,7 @@ from .blip import create_vit, init_tokenizer
 
 class BLIP_Pretrain(nn.Module):
     def __init__(self,
-                 tokenizer: transformers.BlipTokenizer,
+                 tokenizer,
                  med_config = "med_config.json",  
                  image_size = 224,
                  vit = 'base',
