@@ -15,6 +15,7 @@ import torch.nn as nn
 from PIL import Image
 from .models.BLIP.blip_pretrain import BLIP_Pretrain
 from torchvision.transforms import Compose, Resize, CenterCrop, ToTensor, Normalize
+from transformers import BertTokenizer
 
 try:
     from torchvision.transforms import InterpolationMode
@@ -69,11 +70,11 @@ class MLP(nn.Module):
 
 
 class ImageReward(nn.Module):
-    def __init__(self, med_config, device='cpu'):
+    def __init__(self, med_config, device='cpu', tokenizer=None):
         super().__init__()
         self.device = device
         
-        self.blip = BLIP_Pretrain(image_size=224, vit='large', med_config=med_config)
+        self.blip = BLIP_Pretrain(image_size=224, vit='large', med_config=med_config, tokenizer=tokenizer)
         self.preprocess = _transform(224)
         self.mlp = MLP(768)
         
